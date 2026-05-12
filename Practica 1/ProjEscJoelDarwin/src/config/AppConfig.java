@@ -95,4 +95,21 @@ public class AppConfig {
     public static ViaController getViaController() {
         return viaController;
     }
+
+    public static EscaladorService getEscaladorService() {
+        return Escaladorservice;
+    }
+
+    public static EscolaService getEscolaService() {
+        return escolaService;
+    }
+
+    public static SectorService getSectorService() {
+        return sectorService;
+    }
+
+    public static ViaService getViaService() {
+        return viaService;
+    }
+
 }

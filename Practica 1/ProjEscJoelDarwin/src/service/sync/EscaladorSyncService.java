@@ -4,11 +4,13 @@ import api.ApiClient;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import dao.impl.mysql.*;
+import config.AppConfig;
 
-import dao.interfaces.EscaladorDAO;
+import controller.EscaladorController;
+
 import model.dto.api.ApiEscaladorDto;
 import model.entity.Escalador;
+import service.EscaladorService;
 
 public class EscaladorSyncService {
 
@@ -16,7 +18,7 @@ public class EscaladorSyncService {
 
     private final ObjectMapper mapper;
 
-    private final EscaladorDAO escaladorDAO;
+    private final EscaladorService escaladorController;
 
     public EscaladorSyncService() {
 
@@ -24,7 +26,8 @@ public class EscaladorSyncService {
 
         this.mapper = new ObjectMapper();
 
-        this.escaladorDAO = new EscaladorDAO();
+        this.escaladorController =
+                AppConfig.getEscaladorService();
     }
 
     public void syncEscaladors() {
@@ -46,7 +49,9 @@ public class EscaladorSyncService {
                 Escalador escalador =
                         convertirDtoAEntity(dto);
 
-                escaladorDAO.inserir(escalador);
+                escaladorController.crearEscalador(
+                        escalador
+                );
             }
 
             System.out.println(
@@ -79,7 +84,9 @@ public class EscaladorSyncService {
             Escalador escalador =
                     convertirDtoAEntity(dto);
 
-            escaladorDAO.insert(escalador);
+            escaladorController.crearEscalador(
+                    escalador
+            );
 
             System.out.println(
                     "Escalador sincronitzat correctament"

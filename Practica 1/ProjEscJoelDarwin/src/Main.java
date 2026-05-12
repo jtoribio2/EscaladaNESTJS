@@ -6,6 +6,7 @@ import java.util.*;
 import api.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import service.sync.EscaladorSyncService;
 
 public class Main {
 
@@ -13,29 +14,10 @@ public class Main {
 
     public static void main(String[] args) {
 
-        ApiClient apiClient = new ApiClient();
+        EscaladorSyncService syncService =
+                new EscaladorSyncService();
 
-        try {
-
-            String json = apiClient.get(
-                    "http://localhost:3000/escoles"
-            );
-
-            ObjectMapper mapper = new ObjectMapper();
-
-            ApiEscolaDto[] vias = mapper.readValue(
-                    json,
-                    ApiEscolaDto[].class
-            );
-
-            for (ApiEscolaDto via : vias) {
-                System.out.println(via.getNom());
-            }
-
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+        syncService.syncEscaladors();
 
         // MainMenu menu = new MainMenu();
         // menu.iniciar();
