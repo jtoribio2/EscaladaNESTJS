@@ -2,8 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateViaDto } from './dto/create-via.dto';
+import { FilterViaDto } from './dto/filter-via.dto';
 
-import { Via } from './entity/via.entity';
+import { Via } from './entities/via.entity';
 
 @Injectable()
 export class ViasService {
@@ -13,8 +14,73 @@ export class ViasService {
         private viaRepository: Repository<Via>,
     ) { }
 
-    findAll() {
-        return this.viaRepository.find();
+    findAll(filters: FilterViaDto) {
+
+        const query = this.viaRepository
+            .createQueryBuilder('via')
+            .leftJoinAndSelect('via.sector', 'sector');
+
+        if (filters.dificultat) {
+
+            query.andWhere(
+                'via.dificultat = :dificultat',
+                {
+                    dificultat: filters.dificultat,
+                },
+            );
+        }
+
+        if (filters.orientacio) {
+
+            query.andWhere(
+                'via.orientacio = :orientacio',
+                {
+                    orientacio: filters.orientacio,
+                },
+            );
+        }
+
+        if (filters.ancoratge) {
+
+            query.andWhere(
+                'via.ancoratge = :ancoratge',
+                {
+                    ancoratge: filters.ancoratge,
+                },
+            );
+        }
+
+        if (filters.troca) {
+
+            query.andWhere(
+                'via.troca = :troca',
+                {
+                    troca: filters.troca,
+                },
+            );
+        }
+
+        if (filters.sector) {
+
+            query.andWhere(
+                'sector.idSector = :sector',
+                {
+                    sector: filters.sector,
+                },
+            );
+        }
+
+        return query.getMany();
+    }
+
+    findOne(id: number) {
+
+        return this.viaRepository.findOne({
+            where: {
+                id_via: id,
+            },
+            relations: ['sector'],
+        });
     }
 
     create(createViaDto: CreateViaDto) {
