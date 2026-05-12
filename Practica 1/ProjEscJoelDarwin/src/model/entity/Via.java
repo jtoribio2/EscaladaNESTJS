@@ -23,7 +23,10 @@ public class Via {
         this.troca = troca;
     }
 
-    public Via( int id_sector, int id_tipus_via, String nom, int llargada, String dificultat, String orientacio, String ancoratge, String troca) {
+    public Via() {
+    }
+
+    public Via(int id_sector, int id_tipus_via, String nom, int llargada, String dificultat, String orientacio, String ancoratge, String troca) {
         this.id_via = 0;
         this.id_sector = id_sector;
         this.id_tipus_via = id_tipus_via;
