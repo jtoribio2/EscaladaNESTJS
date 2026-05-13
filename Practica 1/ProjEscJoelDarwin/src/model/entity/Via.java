@@ -1,0 +1,128 @@
+package model.entity;
+
+public class Via {
+    private int id_via;
+    private int id_sector;
+    private int id_tipus_via;
+    private String nom;
+    private int llargada;
+    private String dificultat;
+    private String orientacio;
+    private String ancoratge;
+    private String troca;
+
+    public Via(int id_via, int id_sector, int id_tipus_via, String nom, int llargada, String dificultat, String orientacio, String ancoratge, String troca) {
+        this.id_via = id_via;
+        this.id_sector = id_sector;
+        this.id_tipus_via = id_tipus_via;
+        this.nom = nom;
+        this.llargada = llargada;
+        this.dificultat = dificultat;
+        this.orientacio = orientacio;
+        this.ancoratge = ancoratge;
+        this.troca = troca;
+    }
+
+    public Via() {
+    }
+
+    public Via(int id_sector, int id_tipus_via, String nom, int llargada, String dificultat, String orientacio, String ancoratge, String troca) {
+        this.id_via = 0;
+        this.id_sector = id_sector;
+        this.id_tipus_via = id_tipus_via;
+        this.nom = nom;
+        this.llargada = llargada;
+        this.dificultat = dificultat;
+        this.orientacio = orientacio;
+        this.ancoratge = ancoratge;
+        this.troca = troca;
+    }
+
+    @Override
+    public String toString() {
+        return "──────────── VIA ────────────\n" +
+                "ID             : " + id_via + "\n" +
+                "Sector ID      : " + id_sector + "\n" +
+                "Tipo Via ID    : " + id_tipus_via + "\n" +
+                "Nombre         : " + nom + "\n" +
+                "Longitud       : " + llargada + "m\n" +
+                "Dificultad     : " + dificultat + "\n" +
+                "Orientación    : " + orientacio + "\n" +
+                "Ancoraje       : " + ancoratge + "\n" +
+                "Troca          : " + troca + "\n" +
+                "─────────────────────────────";
+    }
+
+    public int getId_via() {
+        return id_via;
+    }
+
+    public int getId_sector() {
+        return id_sector;
+    }
+
+    public int getId_tipus_via() {
+        return id_tipus_via;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public int getLlargada() {
+        return llargada;
+    }
+
+    public String getDificultat() {
+        return dificultat;
+    }
+
+    public String getOrientacio() {
+        return orientacio;
+    }
+
+    public String getAncoratge() {
+        return ancoratge;
+    }
+
+    public String getTroca() {
+        return troca;
+    }
+
+    public void setId_via(int id_via) {
+        this.id_via = id_via;
+    }
+
+    public void setId_sector(int id_sector) {
+        this.id_sector = id_sector;
+    }
+
+    public void setId_tipus_via(int id_tipus_via) {
+        this.id_tipus_via = id_tipus_via;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public void setLlargada(int llargada) {
+        this.llargada = llargada;
+    }
+
+    public void setDificultat(String dificultat) {
+        this.dificultat = dificultat;
+    }
+
+    public void setOrientacio(String orientacio) {
+        this.orientacio = orientacio;
+    }
+
+    public void setAncoratge(String ancoratge) {
+        this.ancoratge = ancoratge;
+    }
+
+    public void setTroca(String troca) {
+        this.troca = troca;
+    }
+}
+
