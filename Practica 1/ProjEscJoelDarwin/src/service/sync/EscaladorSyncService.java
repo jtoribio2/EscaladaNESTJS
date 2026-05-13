@@ -6,10 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import config.AppConfig;
 
-import controller.EscaladorController;
-
 import model.dto.api.ApiEscaladorDto;
 import model.entity.Escalador;
+
 import service.EscaladorService;
 
 public class EscaladorSyncService {
@@ -18,7 +17,7 @@ public class EscaladorSyncService {
 
     private final ObjectMapper mapper;
 
-    private final EscaladorService escaladorController;
+    private final EscaladorService escaladorService;
 
     public EscaladorSyncService() {
 
@@ -26,7 +25,7 @@ public class EscaladorSyncService {
 
         this.mapper = new ObjectMapper();
 
-        this.escaladorController =
+        this.escaladorService =
                 AppConfig.getEscaladorService();
     }
 
@@ -49,9 +48,10 @@ public class EscaladorSyncService {
                 Escalador escalador =
                         convertirDtoAEntity(dto);
 
-                escaladorController.crearEscalador(
-                        escalador
-                );
+                escaladorService
+                        .guardarOSincronizarEscalador(
+                                escalador
+                        );
             }
 
             System.out.println(
@@ -84,9 +84,10 @@ public class EscaladorSyncService {
             Escalador escalador =
                     convertirDtoAEntity(dto);
 
-            escaladorController.crearEscalador(
-                    escalador
-            );
+            escaladorService
+                    .guardarOSincronizarEscalador(
+                            escalador
+                    );
 
             System.out.println(
                     "Escalador sincronitzat correctament"

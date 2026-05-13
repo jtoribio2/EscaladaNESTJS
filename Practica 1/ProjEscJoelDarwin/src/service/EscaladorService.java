@@ -183,6 +183,40 @@ public class EscaladorService  {
         return escaladorDao.buscarPorNivel(dni);
     }
 
+    /**
+     * mira si el escalador esta en la baser de datos y si esta lo modifica si no lo introduce
+     * @param e
+     * @throws Exception
+     */
+    public void guardarOSincronizarEscalador(
+            Escalador e
+    ) throws Exception {
+
+        if (e == null) {
+
+            throw new Exception(
+                    "Error dades escalador"
+            );
+        }
+
+        Escalador existente =
+                escaladorDao.obtenirPerDni(
+                        e.getDni()
+                );
+
+        if (existente == null) {
+
+            crearEscalador(e);
+
+        } else {
+
+            e.setId_escalador(
+                    existente.getId_escalador()
+            );
+
+            modificarEscalador(e);
+        }
+    }
 
 }
 
