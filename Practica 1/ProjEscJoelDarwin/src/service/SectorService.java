@@ -235,4 +235,30 @@ public class SectorService {
         }
     }
 
+    public void guardarOSincronizarSector(
+            Sector s
+    ) throws Exception {
+
+        if (s == null) {
+
+            throw new Exception(
+                    "Sector null"
+            );
+        }
+
+        Sector existente =
+                sectorDAO.obtenir(
+                        s.getId_sector()
+                );
+
+        if (existente == null) {
+
+            crearSector(s);
+
+        } else {
+
+            modificarSector(s);
+        }
+    }
+
 }

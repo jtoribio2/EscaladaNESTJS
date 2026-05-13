@@ -7,6 +7,9 @@ import api.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import service.sync.EscaladorSyncService;
+import service.sync.EscolaSyncService;
+import service.sync.SectorSyncService;
+import service.sync.ViaSyncService;
 
 public class Main {
 
@@ -17,7 +20,19 @@ public class Main {
         EscaladorSyncService syncService =
                 new EscaladorSyncService();
 
+        EscolaSyncService syncServiceEscola =
+                new EscolaSyncService();
+
+        SectorSyncService syncServiceSector=
+                new SectorSyncService();
+
+        ViaSyncService syncServiceVia=
+                new ViaSyncService();
+
+        syncServiceSector.syncSectors();
+        syncServiceEscola.syncEscoles();
         syncService.syncEscaladors();
+        syncServiceVia.syncVies();
 
         // MainMenu menu = new MainMenu();
         // menu.iniciar();
