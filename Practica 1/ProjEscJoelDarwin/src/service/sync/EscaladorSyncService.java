@@ -4,6 +4,7 @@ import api.ApiClient;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import config.ApiConfig;
 import config.AppConfig;
 
 import model.dto.api.ApiEscaladorDto;
@@ -34,7 +35,7 @@ public class EscaladorSyncService {
         try {
 
             String json = apiClient.get(
-                    "http://localhost:3000/escaladors"
+                    ApiConfig.BASE_URL + "/escaladors"
             );
 
             ApiEscaladorDto[] escaladorsDto =
@@ -72,7 +73,7 @@ public class EscaladorSyncService {
         try {
 
             String json = apiClient.get(
-                    "http://localhost:3000/escaladors/" + id
+                    ApiConfig.BASE_URL + "/escaladors" + id
             );
 
             ApiEscaladorDto dto =

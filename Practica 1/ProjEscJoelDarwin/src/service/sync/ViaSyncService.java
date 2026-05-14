@@ -4,6 +4,7 @@ import api.ApiClient;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import config.ApiConfig;
 import config.AppConfig;
 
 import model.dto.api.ApiViaDto;
@@ -35,7 +36,7 @@ public class ViaSyncService {
         try {
 
             String json = apiClient.get(
-                    "http://localhost:3000/vias"
+                    ApiConfig.BASE_URL + "/vies"
             );
 
             ApiViaDto[] viesDto =
@@ -73,7 +74,7 @@ public class ViaSyncService {
         try {
 
             String json = apiClient.get(
-                    "http://localhost:3000/vias/" + id
+                    ApiConfig.BASE_URL + "/vies" + id
             );
 
             ApiViaDto dto =

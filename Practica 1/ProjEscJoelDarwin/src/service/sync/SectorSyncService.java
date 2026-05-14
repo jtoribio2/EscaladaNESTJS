@@ -4,6 +4,7 @@ import api.ApiClient;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import config.ApiConfig;
 import config.AppConfig;
 
 import model.dto.api.ApiSectorDto;
@@ -34,7 +35,7 @@ public class SectorSyncService {
         try {
 
             String json = apiClient.get(
-                    "http://localhost:3000/sectors"
+                    ApiConfig.BASE_URL + "/sectors"
             );
 
             ApiSectorDto[] sectorsDto =
@@ -72,7 +73,7 @@ public class SectorSyncService {
         try {
 
             String json = apiClient.get(
-                    "http://localhost:3000/sectors/" + id
+                    ApiConfig.BASE_URL + "/sectors" + id
             );
 
             ApiSectorDto dto =

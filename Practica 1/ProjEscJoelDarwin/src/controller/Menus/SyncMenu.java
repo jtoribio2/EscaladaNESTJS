@@ -14,6 +14,12 @@ public class SyncMenu {
 
     public void iniciar() {
 
+        if (!syncService.validarVersio()) {
+
+            System.out.println("La versió de la API no és compatible");
+            return;
+        }
+
         int opcio;
 
         do {

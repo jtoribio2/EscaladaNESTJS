@@ -4,6 +4,7 @@ import api.ApiClient;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import config.ApiConfig;
 import config.AppConfig;
 
 import model.dto.api.ApiEscolaDto;
@@ -34,7 +35,7 @@ public class EscolaSyncService {
         try {
 
             String json = apiClient.get(
-                    "http://localhost:3000/escoles"
+                    ApiConfig.BASE_URL + "/escoles"
             );
 
             ApiEscolaDto[] escolesDto =
@@ -72,7 +73,7 @@ public class EscolaSyncService {
         try {
 
             String json = apiClient.get(
-                    "http://localhost:3000/escoles/" + id
+                    ApiConfig.BASE_URL + "/escoles" + id
             );
 
             ApiEscolaDto dto =
