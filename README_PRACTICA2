@@ -1,0 +1,580 @@
+# App Escalada - JDBC + API Sync
+
+Aplicación backend desarrollada en Java + JDBC para la gestión de escuelas, sectores, vías y escaladores de escalada.
+
+Proyecto realizado como práctica de persistencia de datos en DAW.
+
+En esta segunda práctica se amplió el proyecto original JDBC añadiendo sincronización de datos mediante una API REST creada manualmente con NestJS y TypeScript.
+
+---
+
+# Objetivo de la práctica
+
+El objetivo principal de la práctica consistía en consumir JSONs desde endpoints de una API pública.
+
+En lugar de utilizar una temática completamente distinta, se decidió reutilizar la lógica de negocio ya desarrollada en la práctica anterior de JDBC sobre escalada.
+
+Para ello se creó una API REST propia utilizando NestJS + TypeScript conectada a una segunda base de datos duplicada de la aplicación original.
+
+Esto permitió:
+
+* Reutilizar toda la lógica de negocio creada previamente
+* Mantener las relaciones complejas ya implementadas
+* Trabajar sobre un caso real de sincronización entre aplicaciones
+* Aplicar sincronización de datos entre API y JDBC
+* Implementar versionado de API
+* Trabajar con JSON reales
+* Utilizar DTOs y serialización/deserialización
+
+---
+
+# Tecnologías utilizadas
+
+* Java
+* JDBC
+* MySQL
+* SQL
+* TypeScript
+* NestJS
+* REST API
+* JSON
+* Jackson
+* Arquitectura por capas
+* DAO Pattern
+* DTO Pattern
+
+---
+
+# Arquitectura general del proyecto
+
+El sistema quedó dividido en dos aplicaciones independientes:
+
+```text
+JDBC APP
+    ↓
+REST API (NestJS)
+    ↓
+Base de datos MySQL duplicada
+```
+
+La aplicación JDBC consume información JSON desde la API REST y sincroniza sus datos con su propia base de datos local.
+
+---
+
+# API REST creada con NestJS
+
+Se desarrolló una API REST completa utilizando NestJS y TypeScript.
+
+La API quedó conectada a una base de datos duplicada del proyecto original JDBC.
+
+---
+
+# Estructura NestJS implementada
+
+Para cada entidad se implementaron:
+
+```text
+Entity
+Controller
+Service
+Module
+```
+
+Entidades implementadas:
+
+* Escoles
+* Sectors
+* Vies
+* Escaladors
+* TipusVia
+
+---
+
+# Endpoints implementados
+
+La API expone los siguientes endpoints:
+
+```text
+/v1/escoles
+/v1/sectors
+/v1/vies
+/v1/escaladors
+/v1/tipus-via
+/v1/version
+```
+
+También se implementaron filtros por ID y filtros personalizados.
+
+Ejemplos:
+
+```text
+/v1/escaladors/1
+/v1/escoles/5
+```
+
+---
+
+# Versionado de API
+
+Se decidió implementar versionado de API mediante prefijo:
+
+```text
+/v1/
+```
+
+Ejemplo:
+
+```text
+/v1/vies
+```
+
+Esto permite mantener compatibilidad entre distintas versiones de la API aunque cambie la estructura interna de la base de datos o los JSONs devueltos.
+
+---
+
+# Validación de versión desde JDBC
+
+Antes de permitir cualquier sincronización, la aplicación JDBC comprueba automáticamente la versión de la API.
+
+La API expone:
+
+```text
+/v1/version
+```
+
+que devuelve:
+
+```json
+{
+  "version": "v1"
+}
+```
+
+La aplicación JDBC valida si la versión recibida coincide con la versión compatible implementada localmente.
+
+Si la versión no coincide:
+
+```text
+La versió de la API no és compatible
+```
+
+y la sincronización queda bloqueada.
+
+Esto evita errores producidos por:
+
+* Cambios de estructura
+* Cambios de nombres de campos
+* Relaciones incompatibles
+* Cambios en entidades
+* Cambios en DTOs
+
+---
+
+# Uso de JSON
+
+Toda la comunicación entre aplicaciones se realiza mediante JSON.
+
+Ejemplo simplificado:
+
+```json
+{
+  "id_via": 1,
+  "nom": "Via1"
+}
+```
+
+La API devuelve JSONs y la aplicación JDBC los consume para reconstruir entidades locales.
+
+---
+
+# Uso de Jackson
+
+Para procesar los JSONs se utilizó la librería Jackson.
+
+Jackson permitió:
+
+* Leer JSONs
+* Convertir JSON → DTO
+* Serializar/deserializar objetos
+* Trabajar con arrays JSON
+* Convertir automáticamente estructuras complejas
+
+Ejemplo:
+
+```java
+ApiViaDto[] viesDto =
+        mapper.readValue(
+                json,
+                ApiViaDto[].class
+        );
+```
+
+---
+
+# DTOs API implementados
+
+Se implementaron DTOs específicos para consumir información desde la API.
+
+Ejemplos:
+
+* ApiEscolaDto
+* ApiSectorDto
+* ApiViaDto
+* ApiEscaladorDto
+* ApiTipusViaDto
+* ApiVersionDto
+
+---
+
+# Relaciones anidadas en JSON
+
+En los endpoints se decidió devolver objetos completos dentro de otros objetos relacionados.
+
+Ejemplo:
+
+```json
+{
+  "id_via": 1,
+  "sector": {
+    "idSector": 1,
+    "nom": "Sector A"
+  }
+}
+```
+
+Esto se realizó porque es una estructura más profesional y más cercana al funcionamiento real de APIs REST modernas.
+
+Sin embargo, debido a la lógica ya existente en JDBC, posteriormente fue necesario extraer únicamente los IDs mediante getters para mantener la arquitectura ya implementada.
+
+Ejemplo:
+
+```java
+dto.getSector().getIdSector()
+```
+
+---
+
+# Sincronización implementada
+
+Se implementó un sistema completo de sincronización entre API y JDBC.
+
+La sincronización quedó separada en:
+
+```text
+SyncService
+EscolaSyncService
+SectorSyncService
+ViaSyncService
+EscaladorSyncService
+TipusViaSyncService
+```
+
+---
+
+# Menús de sincronización
+
+Se implementaron nuevos menús independientes para gestionar las sincronizaciones.
+
+```text
+MainMenu
+   ↓
+SyncMenu
+```
+
+Opciones implementadas:
+
+* Sincronizar todo
+* Sincronizar terreno
+* Sincronizar escaladores
+* Sincronizar escalador por ID
+
+---
+
+# Sincronización por ID
+
+Inicialmente se implementó sincronización individual por ID para múltiples entidades.
+
+Ejemplos:
+
+```text
+/escaladors/1
+/escoles/5
+```
+
+Esto permitía sincronizar únicamente un elemento concreto.
+
+---
+
+# Problemas encontrados con sincronización parcial
+
+Durante el desarrollo se detectó un problema importante relacionado con las relaciones jerárquicas de la base de datos.
+
+Por ejemplo:
+
+```text
+Escola → Sector → Via
+```
+
+Sincronizar únicamente un sector podía romper la lógica de negocio si las vías relacionadas no existían todavía en la base de datos local.
+
+Esto podía generar:
+
+* Relaciones inconsistentes
+* Foreign Keys inválidas
+* Entidades incompletas
+* Ruptura de integridad
+
+---
+
+# Decisión final sobre sincronización
+
+Debido a estos problemas se decidió:
+
+## Mantener sincronización completa del terreno
+
+Orden obligatorio:
+
+```text
+TipusVia
+   ↓
+Escoles
+   ↓
+Sectors
+   ↓
+Vies
+```
+
+Esto garantiza que todas las Foreign Keys existan antes de sincronizar entidades dependientes.
+
+---
+
+# Sincronización individual mantenida
+
+Finalmente solo se mantuvo activa la sincronización individual de escaladores.
+
+Motivo:
+
+```text
+Escalador
+```
+
+no depende jerárquicamente de:
+
+```text
+Escola
+Sector
+Via
+```
+
+por lo que no rompe relaciones internas de la base de datos.
+
+Los otros métodos individuales se mantuvieron implementados para futuras ampliaciones del proyecto.
+
+---
+
+# Actualización automática de datos
+
+Se implementó lógica adicional para detectar si una entidad ya existía en la base de datos local.
+
+El flujo quedó planteado de la siguiente manera:
+
+```text
+¿Existe?
+   ↓
+Sí → UPDATE
+No → INSERT
+```
+
+Esto permitió mantener sincronizadas ambas bases de datos sin duplicar información.
+
+---
+
+# Arquitectura del proyecto JDBC
+
+El proyecto JDBC mantiene arquitectura por capas:
+
+```text
+controller
+service
+dao
+model
+dto
+view
+config
+db
+api
+sync
+```
+
+---
+
+# Flujo de información
+
+```text
+View
+ ↓
+Controller
+ ↓
+Service
+ ↓
+DAO
+ ↓
+Base de datos
+```
+
+Sincronización:
+
+```text
+API REST
+ ↓
+ApiClient
+ ↓
+DTOs
+ ↓
+Entities
+ ↓
+Services
+ ↓
+DAO
+ ↓
+MySQL
+```
+
+---
+
+# Gestión de conexiones JDBC
+
+La aplicación utiliza JDBC puro para conectarse directamente a MySQL.
+
+Cada operación trabaja con su propia conexión independiente mediante:
+
+```java
+Connection conn = provider.getConnection();
+```
+
+---
+
+# PreparedStatement
+
+Todas las consultas SQL utilizan PreparedStatement.
+
+Esto permite:
+
+* Evitar SQL Injection
+* Reutilizar consultas
+* Insertar parámetros dinámicamente
+* Mejorar seguridad
+
+---
+
+# Validaciones implementadas
+
+Se mantuvieron las validaciones de la práctica original:
+
+* IDs positivos
+* DNI único
+* Popularidad válida
+* Relaciones válidas
+* Restricciones de tipos de vía
+* Integridad referencial
+
+---
+
+# Restricción de tipos de vía
+
+Se mantuvo la regla de negocio:
+
+```text
+Una Escola solo puede contener:
+- Vías GEL
+o
+- Vías Clásicas / Esportivas
+```
+
+Esto obligó a sincronizar completamente la tabla:
+
+```text
+tipus_via
+```
+
+antes de sincronizar vías.
+
+---
+
+# Aprendizaje adquirido
+
+El proyecto permitió profundizar en:
+
+* JDBC
+* SQL relacional
+* APIs REST
+* NestJS
+* TypeScript
+* JSON
+* Jackson
+* DTOs
+* Sincronización entre aplicaciones
+* Arquitectura backend
+* Versionado de APIs
+* Relaciones complejas
+* Integridad de datos
+* Foreign Keys
+* Organización profesional de proyectos
+
+También permitió comprender problemas reales relacionados con:
+
+* Compatibilidad entre versiones
+* Sincronización parcial
+* Integridad referencial
+* Consistencia entre bases de datos
+* Relaciones jerárquicas
+
+---
+
+# Ejecución del proyecto
+
+## 1. Crear bases de datos
+
+Ejecutar los scripts SQL correspondientes.
+
+Se utilizan dos bases de datos:
+
+* Base de datos API
+* Base de datos JDBC
+
+---
+
+## 2. Configurar JDBC
+
+Modificar:
+
+```text
+db.properties
+```
+
+---
+
+## 3. Ejecutar API NestJS
+
+```bash
+npm install
+npm run start:dev
+```
+
+---
+
+## 4. Ejecutar aplicación JDBC
+
+Ejecutar:
+
+```text
+Main.java
+```
+
+---
+
+# Autor
+
+Joel
+
+Proyecto DAW - Persistencia de dades
