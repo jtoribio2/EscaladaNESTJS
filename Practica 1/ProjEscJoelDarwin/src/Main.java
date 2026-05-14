@@ -16,25 +16,7 @@ public class Main {
     private static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
-
-        EscaladorSyncService syncService =
-                new EscaladorSyncService();
-
-        EscolaSyncService syncServiceEscola =
-                new EscolaSyncService();
-
-        SectorSyncService syncServiceSector=
-                new SectorSyncService();
-
-        ViaSyncService syncServiceVia=
-                new ViaSyncService();
-
-        syncServiceSector.syncSectors();
-        syncServiceEscola.syncEscoles();
-        syncService.syncEscaladors();
-        syncServiceVia.syncVies();
-
-        // MainMenu menu = new MainMenu();
-        // menu.iniciar();
+         MainMenu menu = new MainMenu();
+         menu.iniciar();
     }
 }

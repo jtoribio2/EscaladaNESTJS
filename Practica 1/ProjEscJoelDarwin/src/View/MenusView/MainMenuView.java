@@ -3,12 +3,12 @@ package View.MenusView;
 public class MainMenuView {
 
     private static final String MENU_PRINCIPAL = """
-            
+
             ╔══════════════════════════════════════════════╗
             ║                                              ║
             ║                 APP ESCALADA                 ║
             ║                                              ║
-            ║            Creat per Joel i Darwin           ║
+            ║            Creat per Joel                    ║
             ║                                              ║
             ╠══════════════════════════════════════════════╣
             ║                                              ║
@@ -18,11 +18,12 @@ public class MainMenuView {
             ║   4. Consultes                               ║
             ║   5. Modificar                               ║
             ║   6. Eliminar                                ║
+            ║   7. Sincronitzar                            ║
             ║                                              ║
             ║   0. Sortir                                  ║
             ║                                              ║
             ╚══════════════════════════════════════════════╝
-            
+
             Selecciona una opció:
             """;
 

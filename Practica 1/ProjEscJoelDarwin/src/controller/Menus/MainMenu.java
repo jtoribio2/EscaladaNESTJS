@@ -57,6 +57,12 @@ public class MainMenu {
                             .iniciar();
                     break;
 
+                case 7:
+                    new SyncMenu()
+                            .iniciar();
+                    break;
+
+
                 case 0:
                     System.out.println("Sortint...");
                     break;
