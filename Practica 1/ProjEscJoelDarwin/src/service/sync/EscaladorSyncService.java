@@ -4,6 +4,7 @@ import api.ApiClient;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import config.ApiConfig;
 import config.AppConfig;
 
 import model.dto.api.ApiEscaladorDto;
@@ -29,12 +30,15 @@ public class EscaladorSyncService {
                 AppConfig.getEscaladorService();
     }
 
+    /**
+     * Hace una sicnronizacion total de todos los escaladores que devuelve el endpoint esten o no repetidos en nuestra base de datos
+     */
     public void syncEscaladors() {
 
         try {
 
             String json = apiClient.get(
-                    "http://localhost:3000/escaladors"
+                    ApiConfig.BASE_URL + "/escaladors"
             );
 
             ApiEscaladorDto[] escaladorsDto =
@@ -67,12 +71,16 @@ public class EscaladorSyncService {
         }
     }
 
+    /**
+     * sincoriniza en la base de datos un escaladors a traves de su id perteneciente en el endpoint
+     * @param id
+     */
     public void syncEscaladorById(int id) {
 
         try {
 
             String json = apiClient.get(
-                    "http://localhost:3000/escaladors/" + id
+                    ApiConfig.BASE_URL + "/escaladors/" + id
             );
 
             ApiEscaladorDto dto =
@@ -102,6 +110,11 @@ public class EscaladorSyncService {
         }
     }
 
+    /**
+     * transforma el dto recibido de la api en una entidad del JDBC
+     * @param dto
+     * @return
+     */
     private Escalador convertirDtoAEntity(
             ApiEscaladorDto dto
     ) {

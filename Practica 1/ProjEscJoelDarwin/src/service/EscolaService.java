@@ -237,5 +237,31 @@ public void crearEscolaId(Escola es)
 
         escoladao.modificar(e);
     }
+
+    public void guardarOSincronizarEscola(
+            Escola e
+    ) throws Exception {
+
+        if (e == null) {
+
+            throw new Exception(
+                    "Escola null"
+            );
+        }
+
+        Escola existente =
+                escoladao.obtenir(
+                        e.getId_escola()
+                );
+
+        if (existente == null) {
+
+            crearEscola(e);
+
+        } else {
+
+            modificarEscola(e);
+        }
+    }
 }
 

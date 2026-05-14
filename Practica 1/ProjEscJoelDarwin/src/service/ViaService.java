@@ -251,4 +251,30 @@ public void crear(Via v) throws Exception {
         if(sector < 0) throw  new Exception("Error");
         viaDAO.EliminarViasPorSector(sector);
     }
+
+    public void guardarOSincronizarVia(
+            Via v
+    ) throws Exception {
+
+        if (v == null) {
+
+            throw new Exception(
+                    "Via null"
+            );
+        }
+
+        Via existente =
+                viaDAO.obtenir(
+                        v.getId_via()
+                );
+
+        if (existente == null) {
+
+            crear(v);
+
+        } else {
+
+            modificar(v);
+        }
+    }
 }

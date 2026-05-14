@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+
 import { CreateViaDto } from './dto/create-via.dto';
 import { FilterViaDto } from './dto/filter-via.dto';
 
@@ -18,7 +19,8 @@ export class ViasService {
 
         const query = this.viaRepository
             .createQueryBuilder('via')
-            .leftJoinAndSelect('via.sector', 'sector');
+            .leftJoinAndSelect('via.sector', 'sector')
+            .leftJoinAndSelect('via.tipusVia', 'tipusVia');
 
         if (filters.dificultat) {
 
@@ -63,7 +65,7 @@ export class ViasService {
         if (filters.sector) {
 
             query.andWhere(
-                'sector.idSector = :sector',
+                'sector.id_sector = :sector',
                 {
                     sector: filters.sector,
                 },
@@ -79,7 +81,7 @@ export class ViasService {
             where: {
                 id_via: id,
             },
-            relations: ['sector'],
+            relations: ['sector', 'tipusVia'],
         });
     }
 

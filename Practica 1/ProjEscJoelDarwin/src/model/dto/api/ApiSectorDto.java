@@ -4,8 +4,8 @@ public class ApiSectorDto {
 
     private int idSector;
     private String nom;
-    private double latitut;
-    private double longitut;
+    private float latitut;
+    private float longitut;
     private String aproximacio;
     private int popularitat;
 
@@ -30,19 +30,19 @@ public class ApiSectorDto {
         this.nom = nom;
     }
 
-    public double getLatitut() {
+    public float getLatitut() {
         return latitut;
     }
 
-    public void setLatitut(double latitut) {
+    public void setLatitut(float latitut) {
         this.latitut = latitut;
     }
 
-    public double getLongitut() {
+    public float getLongitut() {
         return longitut;
     }
 
-    public void setLongitut(double longitut) {
+    public void setLongitut(float longitut) {
         this.longitut = longitut;
     }
 

@@ -2,7 +2,7 @@ package model.dto.api;
 
 public class ApiViaDto {
 
-    private int idVia;
+    private int id_via;
     private String nom;
     private int llargada;
     private String dificultat;
@@ -16,12 +16,12 @@ public class ApiViaDto {
     public ApiViaDto() {
     }
 
-    public int getIdVia() {
-        return idVia;
+    public int getId_via() {
+        return id_via;
     }
 
-    public void setIdVia(int idVia) {
-        this.idVia = idVia;
+    public void setId_via(int id_via) {
+        this.id_via = id_via;
     }
 
     public String getNom() {

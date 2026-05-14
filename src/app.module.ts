@@ -7,6 +7,7 @@ import { SectorsModule } from './sectors/sectors.module';
 import { EscolesModule } from './escoles/escoles.module';
 import { EscaladorsModule } from './escaladors/escaladors.module';
 import { TipusViaModule } from './tipus-via/tipus-via.module';
+import { VersionController } from './version/version.controller';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { TipusViaModule } from './tipus-via/tipus-via.module';
     EscaladorsModule,
     TipusViaModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, VersionController],
   providers: [AppService],
 })
 export class AppModule {}
