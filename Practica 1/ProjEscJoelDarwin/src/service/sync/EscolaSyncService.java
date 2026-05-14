@@ -73,7 +73,7 @@ public class EscolaSyncService {
         try {
 
             String json = apiClient.get(
-                    ApiConfig.BASE_URL + "/escoles" + id
+                    ApiConfig.BASE_URL + "/escoles/" + id
             );
 
             ApiEscolaDto dto =

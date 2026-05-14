@@ -73,7 +73,7 @@ public class SectorSyncService {
         try {
 
             String json = apiClient.get(
-                    ApiConfig.BASE_URL + "/sectors" + id
+                    ApiConfig.BASE_URL + "/sectors/" + id
             );
 
             ApiSectorDto dto =

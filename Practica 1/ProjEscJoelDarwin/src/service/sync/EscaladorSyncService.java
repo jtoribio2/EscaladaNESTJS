@@ -73,7 +73,7 @@ public class EscaladorSyncService {
         try {
 
             String json = apiClient.get(
-                    ApiConfig.BASE_URL + "/escaladors" + id
+                    ApiConfig.BASE_URL + "/escaladors/" + id
             );
 
             ApiEscaladorDto dto =

@@ -36,7 +36,7 @@ public class ViaSyncService {
         try {
 
             String json = apiClient.get(
-                    ApiConfig.BASE_URL + "/vies"
+                    ApiConfig.BASE_URL + "/vias"
             );
 
             ApiViaDto[] viesDto =
@@ -74,7 +74,7 @@ public class ViaSyncService {
         try {
 
             String json = apiClient.get(
-                    ApiConfig.BASE_URL + "/vies" + id
+                    ApiConfig.BASE_URL + "/vias/" + id
             );
 
             ApiViaDto dto =
