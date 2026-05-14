@@ -30,7 +30,9 @@ public class ViaSyncService {
         this.viaService =
                 AppConfig.getViaService();
     }
-
+    /**
+     * Hace una sicnronizacion total de todas las vias que devuelve el endpoint esten o no repetidos en nuestra base de datos
+     */
     public void syncVies() {
 
         try {
@@ -68,7 +70,10 @@ public class ViaSyncService {
             );
         }
     }
-
+    /**
+     * sincoriniza en la base de datos una via a traves de su id perteneciente en el endpoint
+     * @param id
+     */
     public void syncViaById(int id) {
 
         try {

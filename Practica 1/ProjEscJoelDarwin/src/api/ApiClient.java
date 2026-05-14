@@ -39,6 +39,11 @@ public class ApiClient {
         return response.body();
     }
 
+    /**
+     * Entra en el endpoint de la api donde muestra la version y la devuelve en forma DTO
+     * @return
+     * @throws Exception
+     */
     public ApiVersionDTO obtenirVersio() throws Exception {
 
         String response = get("http://localhost:3000/v1/version");

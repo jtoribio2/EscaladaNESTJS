@@ -30,6 +30,9 @@ public class EscaladorSyncService {
                 AppConfig.getEscaladorService();
     }
 
+    /**
+     * Hace una sicnronizacion total de todos los escaladores que devuelve el endpoint esten o no repetidos en nuestra base de datos
+     */
     public void syncEscaladors() {
 
         try {
@@ -68,6 +71,10 @@ public class EscaladorSyncService {
         }
     }
 
+    /**
+     * sincoriniza en la base de datos un escaladors a traves de su id perteneciente en el endpoint
+     * @param id
+     */
     public void syncEscaladorById(int id) {
 
         try {
@@ -103,6 +110,11 @@ public class EscaladorSyncService {
         }
     }
 
+    /**
+     * transforma el dto recibido de la api en una entidad del JDBC
+     * @param dto
+     * @return
+     */
     private Escalador convertirDtoAEntity(
             ApiEscaladorDto dto
     ) {

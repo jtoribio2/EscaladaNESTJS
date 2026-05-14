@@ -29,7 +29,9 @@ public class EscolaSyncService {
         this.escolaService =
                 AppConfig.getEscolaService();
     }
-
+    /**
+     * Hace una sicnronizacion total de todas las escolas que devuelve el endpoint esten o no repetidos en nuestra base de datos
+     */
     public void syncEscoles() {
 
         try {
@@ -67,7 +69,10 @@ public class EscolaSyncService {
             );
         }
     }
-
+    /**
+     * sincoriniza en la base de datos una escola a traves de su id perteneciente en el endpoint
+     * @param id
+     */
     public void syncEscolaById(int id) {
 
         try {

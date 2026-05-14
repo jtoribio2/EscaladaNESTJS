@@ -29,7 +29,9 @@ public class SectorSyncService {
         this.sectorService =
                 AppConfig.getSectorService();
     }
-
+    /**
+     * Hace una sicnronizacion total de todos los sectores que devuelve el endpoint esten o no repetidos en nuestra base de datos
+     */
     public void syncSectors() {
 
         try {
@@ -67,7 +69,10 @@ public class SectorSyncService {
             );
         }
     }
-
+    /**
+     * sincoriniza en la base de datos un sector a traves de su id perteneciente en el endpoint
+     * @param id
+     */
     public void syncSectorById(int id) {
 
         try {
