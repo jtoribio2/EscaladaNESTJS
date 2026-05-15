@@ -4,10 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import model.dto.api.ApiVersionDTO;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.net.http.*;
+import java.time.Duration;
 
 public class ApiClient {
 
@@ -37,6 +39,51 @@ public class ApiClient {
         );
 
         return response.body();
+    }
+
+    public InputStream getStream(String url)
+            throws Exception {
+
+        int intents = 3;
+
+        while (intents > 0) {
+
+            try {
+
+                HttpRequest request =
+                        HttpRequest.newBuilder()
+                                .uri(URI.create(url))
+                                .timeout(
+                                        Duration.ofSeconds(10)
+                                )
+                                .GET()
+                                .build();
+
+                HttpResponse<InputStream> response =
+                        client.send(
+                                request,
+                                HttpResponse.BodyHandlers
+                                        .ofInputStream()
+                        );
+
+                return response.body();
+            }
+            catch (Exception e) {
+
+                intents--;
+
+                System.out.println(
+                        "Error connexio API. Reintentant..."
+                );
+
+                if (intents == 0) {
+
+                    throw new Exception("No se ha podido conectar");
+                }
+            }
+        }
+
+        return null;
     }
 
     /**

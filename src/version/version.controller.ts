@@ -7,7 +7,7 @@ export class VersionController {
     getVersion() {
 
         return {
-            version: 'v2',
+            version: 'v1',
         };
     }
 }

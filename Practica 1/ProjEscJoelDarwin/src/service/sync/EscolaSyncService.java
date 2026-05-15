@@ -12,6 +12,8 @@ import model.entity.Escola;
 
 import service.EscolaService;
 
+import java.io.InputStream;
+
 public class EscolaSyncService {
 
     private final ApiClient apiClient;
@@ -36,7 +38,7 @@ public class EscolaSyncService {
 
         try {
 
-            String json = apiClient.get(
+            InputStream json = apiClient.getStream(
                     ApiConfig.BASE_URL + "/escoles"
             );
 
