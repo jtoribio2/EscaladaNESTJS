@@ -124,3 +124,8 @@ SELECT
 FROM sectors s
 LEFT JOIN vies v ON s.id_sector = v.id_sector
 GROUP BY s.id_sector, s.nom;
+
+INSERT INTO tipus_via (tipus) VALUES
+('esportiva'),
+('classica'),
+('gel');
