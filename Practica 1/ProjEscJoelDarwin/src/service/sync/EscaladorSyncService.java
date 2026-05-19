@@ -12,6 +12,8 @@ import model.entity.Escalador;
 
 import service.EscaladorService;
 
+import java.io.InputStream;
+
 public class EscaladorSyncService {
 
     private final ApiClient apiClient;
@@ -37,7 +39,7 @@ public class EscaladorSyncService {
 
         try {
 
-            String json = apiClient.get(
+            InputStream json = apiClient.getStream(
                     ApiConfig.BASE_URL + "/escaladors"
             );
 
