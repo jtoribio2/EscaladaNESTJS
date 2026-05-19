@@ -13,6 +13,8 @@ import model.entity.Via;
 
 import service.ViaService;
 
+import java.io.InputStream;
+
 public class ViaSyncService {
 
     private final ApiClient apiClient;
@@ -37,7 +39,7 @@ public class ViaSyncService {
 
         try {
 
-            String json = apiClient.get(
+            InputStream json = apiClient.getStream(
                     ApiConfig.BASE_URL + "/vias"
             );
 

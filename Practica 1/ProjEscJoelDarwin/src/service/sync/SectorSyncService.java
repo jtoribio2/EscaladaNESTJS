@@ -12,6 +12,8 @@ import model.entity.Sector;
 
 import service.SectorService;
 
+import java.io.InputStream;
+
 public class SectorSyncService {
 
     private final ApiClient apiClient;
@@ -36,7 +38,7 @@ public class SectorSyncService {
 
         try {
 
-            String json = apiClient.get(
+            InputStream json = apiClient.getStream(
                     ApiConfig.BASE_URL + "/sectors"
             );
 
